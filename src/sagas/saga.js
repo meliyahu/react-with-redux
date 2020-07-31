@@ -1,17 +1,26 @@
-// import delay from "redux-saga";
-// import { takeEvery,put, delay } from "redux-saga/effects";
-import { takeLatest, put, delay } from "redux-saga/effects";
+import { takeLatest, put, delay, all } from "redux-saga/effects";
+import {
+  ageUpAction,
+  ageUpAsyncAction,
+  ageDownAction,
+  ageDownAsyncAction,
+} from "../store/reducer";
 
 function* ageUpAsync(action) {
-  console.log("action=", action);
-  console.log("ageUpAsync() before delay 4000");
+  console.log("in ageUpAsync() action=", action);
   yield delay(4000);
-  console.log("in ageUpSync() after delay 4000");
-  yield put({ type: "AGE_UP_ASYNC", value: 1 });
+  yield put(ageUpAsyncAction(action.payload));
+}
+
+function* ageDownAsync(action) {
+  console.log("in ageDownAsync() action=", action);
+  yield delay(3000);
+  yield put(ageDownAsyncAction(action.payload));
 }
 //generator function
 export function* watchAgeUp() {
-  // yield takeEvery("AGE_UP", ageUpAsync);
   console.log("in watchAgeUp()");
-  yield takeLatest("AGE_UP", ageUpAsync);
+  // yield takeLatest("AGE_UP", ageUpAsync);
+  yield takeLatest(ageUpAction.type, ageUpAsync);
+  yield takeLatest(ageDownAction.type, ageDownAsync);
 }
