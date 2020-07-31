@@ -1,34 +1,23 @@
-import React, { Component } from "react";
+import React from "react";
 import "./App.css";
-import { connect } from "react-redux";
+import AppEngine from "./AppEngine";
 
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <div className="Age-label">
-          your age: <span>{this.props.age}</span>
-        </div>
-        <button onClick={this.props.onAgeUp}>Age UP</button>
-        <button onClick={this.props.onAgeDown}>Age Down</button>
-      </div>
-    );
-  }
+//
+import { BrowserRouter as Router } from "react-router-dom";
+
+// function App() {
+//   return (
+//     <div className="App">
+//       <AppEngine />
+//     </div>
+//   );
+// }
+function App() {
+  return (
+    <Router>
+      <AppEngine />
+    </Router>
+  );
 }
 
-const mapStateToProps = state => {
-  return {
-    age: state.age
-  };
-};
-
-const mapDispachToProps = dispatch => {
-  return {
-    onAgeUp: () => dispatch({ type: "AGE_UP", value: 1 }),
-    onAgeDown: () => dispatch({ type: "AGE_DOWN", value: 1 })
-  };
-};
-export default connect(
-  mapStateToProps,
-  mapDispachToProps
-)(App);
+export default App;
